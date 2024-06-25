@@ -45,6 +45,7 @@ const BudgetForm = () => {
   const [unitPriceError, setUnitPriceError] = useState('');
   const [quantityError, setQuantityError] = useState('');
   const [departmentSelections,setDepartmentSelections] = useState([]);
+  const [departmentSelections1,setDepartmentSelections1] = useState([]);
   const [unitPriceError2, setUnitPriceError2] = useState('');
   const [quantityError2, setQuantityError2] = useState('');
   const [nextSno, setNextSno] = useState(2);
@@ -427,7 +428,7 @@ const BudgetForm = () => {
         </div>
         <div style={styles.section}>
           <label style={styles.label}>Department:</label>
-          <select value={selectedDepartment} onChange={handleDepartmentChange}>
+          <select style={styles.select} value={selectedDepartment} onChange={handleDepartmentChange}>
           <option value="">Select Department</option>
           {departmentOptions.map((department, index) => (
             <option key={index} value={department}>{department}</option>
@@ -524,7 +525,7 @@ const BudgetForm = () => {
                     <option key={deptIndex} value={department}>{department}</option>
                   ))}
                 </select> */}
-               <select
+               <select style={styles.inputSmall}
               value={row.department}
               onChange={(e) => handleBeneficiaryDepartmentChange(index, e.target.value)}
             >
