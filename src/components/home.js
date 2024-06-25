@@ -5,7 +5,7 @@ import Navbar from './navbar';
 const Home = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { college } = location.state ;
+  const college = localStorage.getItem("college") ;
   const [showDrawer, setShowDrawer] = useState(false);
 
   const toggleDrawer = () => {

@@ -363,7 +363,7 @@ export default EquipmentForm;
 // const Equipment = () => {
 //   const location = useLocation();
 //   const navigate = useNavigate();
-//   const { college } = location.state;
+//   const college = localStorage.getItem("college");
 //   const [selectedCollege, setSelectedCollege] = useState(college);
 //   const [departmentOptions, setDepartmentOptions] = useState([]);
 //   const [selectedDepartments, setSelectedDepartments] = useState('');

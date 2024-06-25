@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Checkbox = ({ checked, onChange, value }) => {
@@ -16,7 +16,7 @@ const Checkbox = ({ checked, onChange, value }) => {
 const BudgetForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { college } = location.state;
+  const college = localStorage.getItem("college");
   const [selectedCollege, setSelectedCollege] = useState(college);
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
