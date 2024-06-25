@@ -24,7 +24,7 @@ const BudgetForm = () => {
   const [dateTo, setDateTo] = useState('');
   const [selectedDepartments, setSelectedDepartments] = useState([]);
   const [showFileUpload, setShowFileUpload] = useState(false);
-
+  const [academicYear,setAcademicYear] = useState("")
   const [selectedTimeFrom, setSelectedTimeFrom] = useState('00:00');
   const [selectedTimeTo, setSelectedTimeTo] = useState('00:00');
   const [duration, setDuration] = useState('');
@@ -380,7 +380,7 @@ const BudgetForm = () => {
         selectedActivityType: selectedActivityType,
         selectedActivityAffilation: selectedActivityAffiliation,  // Corrected field name
         eventTitle: eventTitle,
-        academicYearSelection: selectedYears.join(', '), // Assuming backend expects comma-separated values
+        academicYearSelection: academicYear, // Assuming backend expects comma-separated values
         facultyName: facultyName,
         facultyContactNumber: facultyNumber, // Corrected field name
         addtionalComment: comment, // Ensure this is correctly spelled if backend expects "additionalComment"
@@ -442,6 +442,19 @@ const BudgetForm = () => {
 
 
         </div>
+        <div style={styles.section}>
+        <label style={styles.label}>Department:</label>
+        <select 
+      style={styles.select}
+      onChange={(e)=>{setAcademicYear(e.target.value)}}
+    >
+      <option value="">Select Academic Year</option>
+      <option value="First Year">First Year</option>
+      <option value="Second Year">Second Year</option>
+      <option value="Third Year">Third Year</option>
+      <option value="Fourth Year">Fourth Year</option>
+    </select>
+    </div>
         <div style={styles.section}>
           <label style={styles.label}>Time from:</label>
           <input type="time" value={selectedTimeFrom} onChange={handleTimeFromChange} style={styles.input} />
