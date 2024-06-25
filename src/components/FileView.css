@@ -1,0 +1,171 @@
+.nav1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #afa8a8;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the heading */
+.nav1 h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+/* Styling for the file input */
+.nav1 input[type="file"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #a7a7a7;
+    border-radius: 4px;
+}
+
+.nav1 button{
+    /* display: flex;
+    flex-direction: column; */
+    margin-left: 15px;
+    padding: 10px;
+}
+
+h5{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: 400;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
+    padding-bottom: 50px;
+}
+
+#save {
+    /* padding-left: 20px; */
+    font-size: 1em;
+    color: #ffffff;
+    background-color: #024a98;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Change background color on hover */
+#save:hover {
+    background-color: #0056b3;
+}
+
+/* Change background color on active (click) */
+#save:active {
+    background-color: #024a98;
+    padding: 20px;
+}
+.file-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.view-button, .download-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.view-button {
+    background-color: #17a2b8;
+}
+
+.view-button:hover {
+    background-color: #138496;
+}
+
+.view-button:active {
+    background-color: #117a8b;
+}
+
+.download-button {
+    background-color: #28a745;
+}
+
+.download-button:hover {
+    background-color: #218838;
+}
+
+.download-button:active {
+    background-color: #1e7e34;
+}
+
+.file-container {
+    margin-top: 20px;
+    width: 100%;
+    height: 200vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid #ebebeb;
+    border-radius: 8px;
+    /* padding: 20px; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffffa8;
+    overflow: inherit;
+    position: relative;
+}
+.file-preview{
+    /* padding-top: 10vh; */
+    width: 100%;
+    /* max-height: 500px; */
+    height: 100%;
+    /* margin-left: 65vh; */
+    display: flex;
+    justify-content:flex-start;
+    align-items: center;
+    /* overflow:inherit; */
+    /* padding-right: vh; */
+    /* margin-right: 30%; */
+    flex-direction: column;
+    overflow: hidden;
+    object-fit: contain;
+
+}
+
+.uploaded-file{
+    /* max-width: 100%;
+    max-height: 400px;
+    margin-top: 20px; */
+    width: 100vw;
+    height: 100vh;
+}
+
+.warning {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ffcccc;
+    border: 1px solid #ff0000;
+    border-radius: 4px;
+    color: #ff0000;
+    font-weight: bold;
+}  
+
+/* Styling for the Excel table */
+.excel-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.excel-table th, .excel-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.excel-table th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+

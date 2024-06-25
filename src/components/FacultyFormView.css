@@ -1,0 +1,124 @@
+.container {
+  max-width: 800px; /* Set a maximum width */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.tableContainer {
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.headerRow, .row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  flex: 1;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 2px solid #000;
+}
+
+.column {
+  flex: 1;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.editButton {
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.editButton:hover {
+  background-color: #0056b3;
+}
+
+.panel, .tab {
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+  background-color: #fff;
+  color: #333;
+  flex: 1 1 calc(33.33% - 10px);
+  margin: 5px;
+  text-align: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.tab:hover {
+  background-color: #ddd;
+}
+
+.pending-tab { --tab-color: gold; }
+.approved-tab { --tab-color: green; }
+.disapproved-tab { --tab-color: red; }
+.return-tab { --tab-color: blue; }
+
+.pending-tab:hover, .pending-tab:focus,
+.approved-tab:hover, .approved-tab:focus,
+.disapproved-tab:hover, .disapproved-tab:focus,
+.return-tab:hover, .return-tab:focus {
+  background-color: var(--tab-color);
+  color: #fff;
+}
+
+.react-tabs__tab-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #007BFF;
+  padding: 0 5px;
+}
+
+.react-tabs__tab {
+  flex: 1 1 calc(33.33% - 10px);
+  margin: 5px;
+  text-align: center;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+  background-color: #fff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.react-tabs__tab:hover {
+  background-color: #ddd;
+}
+
+.react-tabs__tab--selected {
+  background-color: var(--tab-color);
+  color: #fff;
+  border-bottom: none;
+}

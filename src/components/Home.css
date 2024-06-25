@@ -1,0 +1,131 @@
+/* Base styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('https://mis.skct.edu.in/assets/images/skibudget/pg.jpeg');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    background-color: #007bff;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.drawerIcon {
+    position: absolute;
+    left: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.logo {
+    height: 50px;
+    width: 100px;
+    margin-right: 10px;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+.drawer {
+    position: absolute;
+    left: 0;
+    top: 80px;
+    bottom: 0;
+    width: 250px;
+    background-color: white;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.body {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin-top: 80px; /* To account for fixed header height */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.centerBox {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 30px;
+    width: 90%; /* Change from 80% */
+    max-width: 600px;
+    text-align: center;
+}
+
+.heading {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #007bff;
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    background-color: #007bff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.buttonText {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+}
