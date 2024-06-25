@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-
+import FileView from './FileView';
 const styles = {
   container: {
     margin: '40px auto',
@@ -125,37 +125,37 @@ const FacultyBudget = ( {}) =>
   {
   const  college =  localStorage.getItem("college") ;
   const navigate = useNavigate();
+  const initialTime = new Date().toLocaleTimeString('en-GB').substring(0, 5);
   const [selectedActivityType, setSelectedActivityType] = useState('');
   const [eventName, setEventName] = useState('');
   const [instituteName, setInstituteName] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
-  const [selectedTimeFrom, setSelectedTimeFrom] = useState(new Date());
-  const [selectedTimeTo, setSelectedTimeTo] = useState(new Date());
+  const [selectedTimeFrom, setSelectedTimeFrom] = useState(initialTime);
+  const [selectedTimeTo, setSelectedTimeTo] = useState(initialTime);
   const [locations, setLocations] = useState('');
+  const [showFileUpload, setShowFileUpload] = useState(false);
   const location=useLocation();
   const getTodayDate = () => {
     return new Date().toISOString().split('T')[0];
   };
-
+  const handleFileSubmit = (file) => {
+    setSelectedFile(file);
+    console.log('Received file from FileView:', file);
+  };
+  const toggleFileUpload = () => {
+    setShowFileUpload(!showFileUpload);
+  };
+  
   const uploadFile = async () => {
-    // try {
-    //   if (selectedFile) {
-    //     const formData = new FormData();
-    //     formData.append('file', selectedFile);
-
-    //     // const response = await axios.post('http://172.20.10.3:9091/file', formData);
-    //     const response = await axios.post('', formData);
-    //     console.log('File upload response:', response.data);
-    //     alert('Success', 'File uploaded successfully');
-    //   } else {
-    //     alert('Error', 'Please select a file first');
-    //   }
-    // } catch (error) {
-    //   console.error('Error uploading file:', error);
-    //   alert('Error', 'Failed to upload file');
-    // }
-    
-    navigate("/fileview");
+    if (!selectedFile) {
+      alert('Please select a file first!');
+      return;
+    }
+    // Simulate file upload
+    alert(`Simulating upload of: ${selectedFile.name}`);
+    // After successful upload, you might want to clear the selected file
+    setSelectedFile(null);
+    setFileMessage('File uploaded successfully');
   };
   // Function to check if a given date is in the past
   const isDateInPast = (selectedDate) => {
@@ -196,7 +196,6 @@ const FacultyBudget = ( {}) =>
         return 'Sri Krishna Institutions';
     }
   };
-  
   const [selectedCollege, setSelectedCollege] = useState(college);
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
@@ -281,7 +280,14 @@ const [quantityError, setQuantityError] = useState('');
     const minDateForTo = nextDate.toISOString().split('T')[0];
     setMinDateForTo(minDateForTo);
   };
+  const handleTimeFromChange = (event) => {
+    setSelectedTimeFrom(event.target.value);
+  };
 
+  // Function to handle changes to the time to input
+  const handleTimeToChange = (event) => {
+    setSelectedTimeTo(event.target.value);
+  };
   const handleDateToSelect = (date) => {
     setDateTo(date);
   };
@@ -342,15 +348,15 @@ const [quantityError, setQuantityError] = useState('');
           <label style={styles.label}>From (Time):</label>
           <input
             type="time"
-            value={selectedTimeFrom.toISOString().slice(11, 16)}
-            onChange={e => handleTimeFromChange(new Date(selectedTimeFrom.toDateString() + ' ' + e.target.value))}
+            value={selectedTimeFrom}
+            onChange={handleTimeFromChange}
             style={styles.input}
             />
           <label style={styles.label}>To (Time):</label>
           <input
             type="time"
-            value={selectedTimeTo.toISOString().slice(11, 16)}
-            onChange={e => handleTimeToChange(new Date(selectedTimeTo.toDateString() + ' ' + e.target.value))}
+            value={selectedTimeTo}
+            onChange={handleTimeToChange}
             style={styles.input}
             />
         </div>
@@ -579,8 +585,10 @@ const [quantityError, setQuantityError] = useState('');
   
    <div style={styles.section}>
           <label style={styles.label}>Document:</label>
-         
-          <button type="button" onClick={uploadFile} style={styles.button}>Upload</button>
+          <button type="button" onClick={toggleFileUpload} style={styles.button}>
+          {showFileUpload ? "Hide Upload" : "Show Upload"}
+        </button>
+        {showFileUpload && <FileView onFileSubmit={handleFileSubmit}/>}
         </div>
 </div>
       <button style={styles.submitButton} onClick={handleSubmit}>
