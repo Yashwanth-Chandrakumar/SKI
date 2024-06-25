@@ -59,6 +59,10 @@ const BudgetForm = () => {
     thirdYear: false,
     finalYear: false,
   });
+  const handleFileSubmit = (file) => {
+    setSelectedFile(file);
+    console.log('Received file from FileView:', file);
+};
   const uploadFile = () => {
     setShowFileUpload(!showFileUpload);
   };
@@ -71,7 +75,7 @@ const BudgetForm = () => {
 
   const [rows, setRows] = useState([{ SNO: 1, equipmentList: '', specification: '', unitPrice: '', quantity: '', cost: '' }]);
   const [resourceRows, setResourceRows] = useState([{ resourceName: '', designation: '', companyDetails: '', contactNumber: '' }]);
-  const [beneficiaryRows, setBeneficiaryRows] = useState([{ academicYear: '', department: '', unitprice: '', quantity: '' }]);
+  const [beneficiaryRows, setBeneficiaryRows] = useState([{ academicYear: '', department: '', quantity: '' }]);
   const [totalBudget, setTotalBudget] = useState(0);
 
   const getCollegeName = () => {
@@ -244,7 +248,7 @@ const BudgetForm = () => {
     setResourceRows([...resourceRows, { resourceName: '', designation: '', companyDetails: '', contactNumber: '' }]);
   };
   const addRow2 = () => {
-    setBeneficiaryRows([...beneficiaryRows, { academicYear: '', department: '', unitprice: '', quantity: '' }]);
+    setBeneficiaryRows([...beneficiaryRows, { academicYear: '', department: '', quantity: '' }]);
   };
 
   const removeRow = (index, event) => {
@@ -380,6 +384,7 @@ const BudgetForm = () => {
         selectedActivityType: selectedActivityType,
         selectedActivityAffilation: selectedActivityAffiliation,  // Corrected field name
         eventTitle: eventTitle,
+        file:selectedFile,
         academicYearSelection: academicYear, // Assuming backend expects comma-separated values
         facultyName: facultyName,
         facultyContactNumber: facultyNumber, // Corrected field name
@@ -397,6 +402,11 @@ const BudgetForm = () => {
           unitPrice: parseFloat(row.unitPrice),
           quantity: parseInt(row.quantity, 10),
           cost: parseFloat(row.cost)
+        })),
+        beneficiaries: beneficiaryRows.map(row => ({
+          academicYear: row.academicYear,
+          department: row.department,
+          quantity: row.quantity,
         }))
       };
   console.log(data)
@@ -694,7 +704,7 @@ const BudgetForm = () => {
     {showFileUpload ? "Hide Upload" : "Show Upload"}
   </button>
 </div>
-{showFileUpload && <FileView />}
+{showFileUpload && <FileView onFileSubmit={handleFileSubmit}/>}
 
         <div style={styles.section}>
           <label style={styles.label}>Comment:</label>

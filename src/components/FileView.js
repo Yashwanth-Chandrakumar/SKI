@@ -5,7 +5,7 @@ import * as XLSX from 'xlsx';
 import '../components/FileView.css';
 
 
-function FileView() {
+function FileView({ onFileSubmit }) {
     const [selectedFile, setSelectedFile] = useState(null);
     const [viewFile, setViewFile] = useState(false);
     const [fileContent, setFileContent] = useState(null);
@@ -33,17 +33,13 @@ function FileView() {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (selectedFile) {
-            console.log('File selected:', selectedFile);
-            // Here you can add the code to upload the file to the server
-            setIsSubmitted(true); // Set the form as submitted
-            toast.success("Updation Successful");
+            onFileSubmit(selectedFile); // Invoke callback when file is submitted
+            setIsSubmitted(true);
+            toast.success("File uploaded successfully!");
         } else {
-            console.log('No file selected');
-            setIsSubmitted(false); 
-            toast.error("Please Select File");
+            toast.error("Please select a file before submitting.");
         }
     };
-
     const handleDownload = () => {
         if (selectedFile) {
             const fileURL = URL.createObjectURL(selectedFile);
