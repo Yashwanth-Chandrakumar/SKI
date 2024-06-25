@@ -89,8 +89,13 @@ const styles = {
     fontWeight: '500',
   },
   addButton: {
-    display: 'inline-block',
-    marginBottom: '10px',
+    padding: '10px 20px',
+    backgroundColor: 'green',
+    color: '#fff',
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s',
   },
   submitButton: {
     display: 'block',
@@ -202,7 +207,7 @@ const [quantityError, setQuantityError] = useState('');
   const [facultyRows, setFacultyRows] = useState([{ facultyName: '', designation: '', department: '', unitPrice: '', quantity: '', cost: '' }]);
   const [departmentOptions, setDepartmentOptions] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
-
+  const [collegeDepartments, setCollegeDepartments] = useState([]);
   const collegeDepartmentMapping = {
     SKASC: ['B.A. English Literature', 'M.A. English Literature', 'B.Sc. Mathematics', 'M.Sc. Mathematics with Big Data', 'B.Sc. Artificial Intelligence and Machine Learning', 'B.Sc. Data Science', 'M.Sc. Software Systems', 'B.Sc.Computer Technology', 'B.C.A. (Computer Applications)', 'B.Sc. Computer Science And Applications', 'B.Sc. Computer Science', 'B.Sc. Software Systems', 'B.Sc. Information Technology', 'B.Sc. Computer Science with Cognitive Systems', 'M.Sc. Information Technology', 'M.Sc. Computer Science', 'B.Sc. Electronics and Communication Systems', 'M.Sc. Electronics and Communication Systems', 'B.Sc. Costume Design and Fashion', 'B.Sc.Catering Science and Hotel Management', 'B.Sc. Biotechnology', 'B.Sc. Microbiology', 'M.Sc. Microbiology', 'M.Sc. Bioinformatics', 'B.Com.(Commerce)', 'M.Com.(Commerce)', 'M.Com. International Business', 'B.Com.Corporate Secretaryship', 'B.Com. Professional Accounting', 'B.Com. Business Process Service', 'B.Com. Banking and Insurance', 'B.Com. Accounting and Finance', 'B.Com. Capital Market', 'B.Com. Computer Applications', 'B.Com. Business Analytics', 'B.Com. Information Technology', 'B.Com. E Commerce', 'B.B.A. Business Administration ', 'B.B.A. Computer Applications', 'B.B.A. Logistics', 'B.Sc. Information Systems Management', 'B.Sc. Psychology', 'M.S.. (Social Work)', 'M.A. Public Administration', 'External'],
     SKCT: ['B.E. Electronics and Communication Engineering', 'B.E. Electrical and Electronics Engineering', 'Science & Humanities', 'B.E. Civil Engineering', 'B.E. Mechanical Engineering', 'B.E. Computer Science and Engineering', 'B.Tech Information Technology', 'Master of Business Administration(MBA)', 'B.Tech.Artificial Intelligence And Data Science', 'B.Tech. Internet of Things', 'B.Tech Cyber Security', 'B.Tech Artificial Intelligence and Machine Learning', 'External'],
@@ -215,20 +220,20 @@ const [quantityError, setQuantityError] = useState('');
   }, [facultyRows]);
   
   useEffect(() => {
-    const collegeName = getCollegeName();
-    const departments = collegeDepartmentMapping[collegeName] || [];
-    setDepartmentOptions(departments);
+    if (selectedCollege) {
+      setCollegeDepartments(collegeDepartmentMapping[selectedCollege] || []);
+    }
   }, [selectedCollege]);
   
 
   const addFacultyRow = () => {
-    setFacultyRows([...facultyRows, { facultyName: '', designation: '', department: '', unitPrice: '', quantity: '', cost: '' }]);
+    const newId = facultyRows.length + 1;
+    setFacultyRows([...facultyRows, { facultyId: newId, department: '', facultyName: '', facultyContact: '' }]);
   };
 
   const removeFacultyRow = (index) => {
-    const newRows = [...facultyRows];
-    newRows.splice(index, 1);
-    setFacultyRows(newRows);
+    const updatedRows = facultyRows.filter((_, idx) => idx !== index);
+    setFacultyRows(updatedRows);
   };
 
   const updateFacultyRow = (index, field, value) => {
@@ -259,7 +264,15 @@ const [quantityError, setQuantityError] = useState('');
       }
     }
   };
-
+  const handleFacultyChange = (index, key, value) => {
+    const updatedRows = facultyRows.map((row, idx) => {
+      if (idx === index) {
+        return { ...row, [key]: value };
+      }
+      return row;
+    });
+    setFacultyRows(updatedRows);
+  };
   const handleDateFromSelect = (date) => {
     setDateFrom(date);
     setDateTo(date);
@@ -356,7 +369,7 @@ const [quantityError, setQuantityError] = useState('');
             </tr>
           </thead>
           <tbody style={styles.tableBody}>
-            {facultyRows.map((row, index) => (
+            {/* {facultyRows.map((row, index) => (
               <tr key={index} style={styles.tableRow}>
                 <td style={styles.tableCell}>
                   <input
@@ -423,6 +436,71 @@ const [quantityError, setQuantityError] = useState('');
                   <button
                     style={styles.removeButton}
                     onClick={() => removeFacultyRow(index)}>
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            ))} */}
+            {facultyRows.map((row, index) => (
+              <tr key={index} style={styles.tableRow}>
+                <td style={styles.tableCell}>
+                  <input  style={styles.facultyInput}
+                    type="text"
+                    value={row.facultyName}
+                    onChange={(e) => updateFacultyRow(index, 'facultyName', e.target.value)}
+                    placeholder="Faculty Name"
+                  />
+                </td>
+                 <td >
+                  <input style={styles.facultyInput}
+                    type="text"
+                    value={row.designation}
+                    onChange={(e) => updateFacultyRow(index, 'designation', e.target.value)}
+                    placeholder="Designation"
+                  />
+                </td>
+                 <td >
+                  <select style={styles.facultyInput}
+                    value={row.department}
+                    onChange={(e) => updateFacultyRow(index, 'department', e.target.value)}
+                  >
+                    <option value="">Select Department</option>
+                    {collegeDepartments.map((department, deptIndex) => (
+                      <option key={deptIndex} value={department}>{department}</option>
+                    ))}
+                  </select>
+                </td>
+                 <td >
+                  <input style={styles.facultyInput}
+                    type="text"
+                    value={row.specification}
+                    onChange={(e) => updateFacultyRow(index, 'specification', e.target.value)}
+                    placeholder="Specification"
+                  />
+                </td>
+                 <td >
+                  <input style={styles.facultyInput}
+                    type="number"
+                    value={row.unitPrice}
+                    onChange={(e) => updateFacultyRow(index, 'unitPrice', e.target.value)}
+                    placeholder="Unit Price"
+                  />
+                  {unitPriceError && <p style={{ color: 'red', fontSize: '12px' }}>{unitPriceError}</p>}
+                </td>
+                 <td >
+                  <input style={styles.facultyInput}
+                    type="number"
+                    value={row.quantity}
+                    onChange={(e) => updateFacultyRow(index, 'quantity', e.target.value)}
+                    placeholder="Quantity"
+                  />
+                  {quantityError && <p style={{ color: 'red', fontSize: '12px' }}>{quantityError}</p>}
+                </td>
+                 <td >{row.cost}</td>
+                 <td >
+                  <button
+                    onClick={() => removeFacultyRow(index)}
+                    style={styles.removeButton}>
                     Remove
                   </button>
                 </td>
