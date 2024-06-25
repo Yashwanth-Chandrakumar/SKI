@@ -308,11 +308,16 @@ const BudgetForm = () => {
     }
   };
 
-  const handleYearChange = (event) => {
-    // Get all selected options and map them to their values
-    const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
-    setSelectedYears(selectedOptions);
-};
+  const handleYearChange = (index, value) => {
+    const updatedRows = beneficiaryRows.map((row, idx) => {
+      if (idx === index) {
+        return { ...row, academicYear: value };
+      }
+      return row;
+    });
+    setBeneficiaryRows(updatedRows);
+  };
+  
 
   
 
@@ -512,12 +517,17 @@ const BudgetForm = () => {
           <div style={styles.section}>
             {beneficiaryRows.map((row, index) => (
               <div key={index} style={styles.row}>
-                <select value={selectedYears} onChange={handleYearChange} style={styles.inputSmall}>
-    <option value="First Year">First Year</option>
-    <option value="Second Year">Second Year</option>
-    <option value="Third Year">Third Year</option>
-    <option value="Fourth Year">Fourth Year</option>
-</select>
+                <select 
+      value={row.academicYear} 
+      onChange={(e) => handleYearChange(index, e.target.value)} 
+      style={styles.inputSmall}
+    >
+      <option value="">Select Academic Year</option>
+      <option value="First Year">First Year</option>
+      <option value="Second Year">Second Year</option>
+      <option value="Third Year">Third Year</option>
+      <option value="Fourth Year">Fourth Year</option>
+    </select>
                 {/* <select
                   style={{ ...styles.inputSmall, ...styles.facultyInput }}>
                   <option value="">Select Department</option>
