@@ -1,14 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+const sampleData = [
+  {
+    SNo: 1,
+    activityType: 'Conference',
+    affiliation: 'Computer Science',
+    eventTitle: 'AI Symposium 2024',
+    facultyName: 'Dr. John Doe',
+    facultyNumber: 'CS001',
+    dateFrom: '2024-09-15',
+    dateTo: '2024-09-17',
+    totalCost: 5000,
+    status: 'Pending',
+    selectedCollege: 'SKCT'
+  },
+  {
+    SNo: 2,
+    activityType: 'Workshop',
+    affiliation: 'Electrical Engineering',
+    eventTitle: 'Renewable Energy Workshop',
+    facultyName: 'Prof. Jane Smith',
+    facultyNumber: 'EE002',
+    dateFrom: '2024-10-01',
+    dateTo: '2024-10-03',
+    totalCost: 3500,
+    status: 'Approved',
+    selectedCollege: "SKCT"
+  },
+  {
+    SNo: 3,
+    activityType: 'Seminar',
+    affiliation: 'Business Administration',
+    eventTitle: 'Digital Marketing Trends',
+    facultyName: 'Dr. Robert Johnson',
+    facultyNumber: 'BA003',
+    dateFrom: '2024-11-10',
+    dateTo: '2024-11-11',
+    totalCost: 2000,
+    status: 'Disapproved',
+    selectedCollege: "SKCT"
+  },
+  {
+    SNo: 4,
+    activityType: 'Training',
+    affiliation: 'Mechanical Engineering',
+    eventTitle: 'Advanced CAD Tools',
+    facultyName: 'Prof. Emily Brown',
+    facultyNumber: 'ME004',
+    dateFrom: '2024-12-05',
+    dateTo: '2024-12-07',
+    totalCost: 4000,
+    status: 'Return',
+    selectedCollege: "SKCT"
+  }
+];
+
 const BudgetFormView = () => {
-  const { college } = useParams();
+  const college = localStorage.getItem("college");
   const [formData, setFormData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [error, setError] = useState(null);
   const [filteredFormData, setFilteredFormData] = useState([]);
   const [modalTitle, setModalTitle] = useState('');
   const [activeTab, setActiveTab] = useState('pending');
@@ -29,15 +81,8 @@ const BudgetFormView = () => {
     setFilteredFormData(filteredData);
   }, [formData, college]);
 
-  const fetchData = async () => {
-    try {
-      // const response = await axios.get('http://your-api-endpoint.com/budget');
-      const response = await axios.get('');
-      setFormData(response.data);
-    } catch (error) {
-      console.error('Error fetching form data:', error);
-      setError('Failed to fetch data');
-    }
+  const fetchData = () => {
+    setFormData(sampleData);
   };
 
   const handleEdit = (item) => {
@@ -47,37 +92,25 @@ const BudgetFormView = () => {
     setModalVisible(true);
   };
 
-  const handleDelete = async (SNo) => {
+  const handleDelete = (SNo) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
-      try {
-        // await axios.delete(`http://your-api-endpoint.com/deleteBudget/${SNo}`);
-        await axios.delete(``);
-        fetchData();
-      } catch (error) {
-        console.error('Error deleting data:', error);
-        setError('Failed to delete data');
-      }
+      const updatedData = formData.filter(item => item.SNo !== SNo);
+      setFormData(updatedData);
     }
   };
 
-  const handleSave = async (newStatus) => {
-    try {
-      const updatedItem = { ...selectedItem, status: newStatus };
-      // await axios.post('http://your-api-endpoint.com/updateBudget', updatedItem);
-      await axios.post('', updatedItem);
-      setModalVisible(false);
-      fetchData();
-      alert(`Budget has been ${newStatus.toLowerCase()} successfully.`);
-    } catch (error) {
-      console.error('Error updating data:', error);
-      setError('Failed to update data');
-      alert('Failed to update budget. Please try again later.');
-    }
+  const handleSave = (newStatus) => {
+    const updatedData = formData.map(item => 
+      item.SNo === selectedItem.SNo ? { ...item, status: newStatus } : item
+    );
+    setFormData(updatedData);
+    setModalVisible(false);
+    alert(`Budget has been ${newStatus.toLowerCase()} successfully.`);
   };
 
   const renderTableHeader = () => (
     <HeaderRow>
-      {['SNo', 'Activity Type', 'Affiliation', 'Event Title', 'Faculty Name', 'Faculty Number', 'Date From', 'Date To', 'Total Cost'].map(header => (
+      {['SNo', 'Activity Type', 'Affiliation', 'Event Title', 'Faculty Name', 'Faculty Number', 'Date From', 'Date To', 'Total Cost', 'Status', 'Actions'].map(header => (
         <Header key={header}>{header}</Header>
       ))}
     </HeaderRow>
@@ -86,7 +119,14 @@ const BudgetFormView = () => {
   const renderTableRow = (item) => (
     <Row key={item.SNo}>
       <Column>{item.SNo}</Column>
+      <Column>{item.activityType}</Column>
+      <Column>{item.affiliation}</Column>
       <Column>{item.eventTitle}</Column>
+      <Column>{item.facultyName}</Column>
+      <Column>{item.facultyNumber}</Column>
+      <Column>{item.dateFrom}</Column>
+      <Column>{item.dateTo}</Column>
+      <Column>{item.totalCost}</Column>
       <Column>{item.status}</Column>
       <Column>
         <Button onClick={() => handleEdit(item)}>Edit</Button>
@@ -116,7 +156,7 @@ const BudgetFormView = () => {
       case 'disapproved':
         return renderSlider('Disapproved', filteredFormData.filter(item => item.status === 'Disapproved'));
       case 'return':
-        return renderSlider('Return', filteredFormData.filter(item => item.status === 'Return' && item.returnedit === 1));
+        return renderSlider('Return', filteredFormData.filter(item => item.status === 'Return'));
       default:
         return null;
     }
