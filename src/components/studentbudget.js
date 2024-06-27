@@ -139,7 +139,7 @@ const StudentBudget = () => {
       [name]: value
     });
   };
-
+  
   const handleArrayChange = (e, index, arrayName) => {
     const { name, value } = e.target;
     const newArray = [...formData[arrayName]];
@@ -165,37 +165,19 @@ const StudentBudget = () => {
     });
   };
 
-  const handleFileChange = (e) => {
-    const files = e.target.files;
-    const newFiles = Array.from(files).map(file => {
-      const reader = new FileReader();
-      return new Promise((resolve, reject) => {
-        reader.onload = () => {
-          resolve({
-            fileName: file.name,
-            fileType: file.type,
-            data: reader.result.split(',')[1] // Base64 encoded string
-          });
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
+  const handleFileSubmit = (fileData) => {
+    setFormData(prevFormData => {
+      const newFormData = {
+        ...prevFormData,
+        fileEntities: [...prevFormData.fileEntities, fileData]
+      };
+      console.log('Updated formData:', newFormData);
+      return newFormData;
     });
-
-    Promise.all(newFiles).then(files => {
-      setFormData({
-        ...formData,
-        fileEntities: [...formData.fileEntities, ...files]
-      });
-    }).catch(error => {
-      console.error('Error reading files', error);
-    });
+    console.log('Received file data from FileView:', fileData);
   };
-
-  const handleFileSubmit = (file) => {
-    setSelectedFile(file);
-    console.log('Received file from FileView:', file);
-  };
+  
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -207,7 +189,9 @@ const StudentBudget = () => {
         formDataToSubmit.append('files', file);
       });
     }
-    console.log(formDataToSubmit)
+    for (let [key, value] of formDataToSubmit.entries()) {
+      console.log(key, value);
+    }
     const token = localStorage.getItem("token")
     axios.post('http://localhost:5000/addStudentFormDetails', formDataToSubmit, {
       headers: {

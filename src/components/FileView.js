@@ -33,7 +33,13 @@ function FileView({ onFileSubmit }) {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (selectedFile) {
-            onFileSubmit(selectedFile); // Invoke callback when file is submitted
+            const fileData = {
+                name: selectedFile.name,
+                type: selectedFile.type,
+                size: selectedFile.size,
+                lastModified: selectedFile.lastModified
+            };
+            onFileSubmit(fileData);
             setIsSubmitted(true);
             toast.success("File uploaded successfully!");
         } else {
