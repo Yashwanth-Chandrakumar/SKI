@@ -192,8 +192,8 @@ const StudentBudget = () => {
     for (let [key, value] of formDataToSubmit.entries()) {
       console.log(key, value);
     }
-    const token = localStorage.getItem("token")
-    axios.post('http://localhost:5000/addStudentFormDetails', formDataToSubmit, {
+    const token = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtZ210QHNraS5hYy5pbiIsImlhdCI6MTcxOTQ4MDgyNCwiZXhwIjoxNzE5NTY3MjI0fQ.CmSNI1xRvzxRobOIfSUX0jT5zd2gbekD7EdgwDsbK7M"
+    axios.post('http://api-test-env.eba-euwgfjn2.ap-south-1.elasticbeanstalk.com/addStudentFormDetails', formDataToSubmit, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
